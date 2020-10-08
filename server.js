@@ -11,8 +11,18 @@ const PORT = process.env.PORT || 8080;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(express.static("public"));
+
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
+
+// ==========TEST=============
+
+app.get("/", (req, res) => {
+    res.render("index");
+})
+
+// ==========TEST=============
 
 // TURNING ON EXPRESS SERVER AND MYSQL CONNECTION
 app.listen(PORT, (err) => {
