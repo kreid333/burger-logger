@@ -14,18 +14,12 @@
             <h2>Burgers to eat</h2>
             <hr>
             <div>
+                {{#each burger}}
                 <div class="toEatDiv">
-                    <span>Chocolate</span>
+                    <span>{{ burger_name }}</span>
                     <button>Devour!</button>
                 </div>
-                <div class="toEatDiv">
-                    <span>Chocolate</span>
-                    <button>Devour!</button>
-                </div>
-                <div class="toEatDiv">
-                    <span>Chocolate</span>
-                    <button>Devour!</button>
-                </div>
+                {{/each}}
             </div>
         </div>
         <div class="col-sm-2"></div>

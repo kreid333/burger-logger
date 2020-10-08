@@ -2,6 +2,7 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
 const connection = require("./config/connection");
+const burger = require("./models/burger");
 
 const app = express();
 
@@ -19,7 +20,9 @@ app.set("view engine", "handlebars");
 // ==========TEST=============
 
 app.get("/", (req, res) => {
-    res.render("index");
+    burger.selectAll(function(data) {
+        res.render("index", {burger: data});
+    })
 })
 
 // ==========TEST=============
