@@ -15,10 +15,12 @@
             <hr>
             <div>
                 {{#each burger}}
+                {{#unless devoured}}
                 <div class="toEatDiv">
                     <span>{{ burger_name }}</span>
-                    <button>Devour!</button>
+                    <button class="devouredBtn" data-id="{{ id }}" data-toEat="{{ devoured }}">Devour!</button>
                 </div>
+                {{/unless}}
                 {{/each}}
             </div>
         </div>
@@ -27,9 +29,11 @@
             <h2>Devoured!</h2>
             <hr>
             <div>
-                <p>Vanilla</p>
-                <p>Vanilla</p>
-                <p>Vanilla</p>
+                {{#each burger}}
+                {{#if devoured}}
+                <p>{{ burger_name }}</p>
+                {{/if}}
+                {{/each}}
             </div>
         </div>
     </div>
@@ -40,8 +44,47 @@
                 <label for="userInput">Enter a burger you want to eat</label>
                 <br>
                 <input id="userInput" type="text">
-                <button>Submit</button>
+                <button id="submitBtn">Submit</button>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+
+        const devouredBtn = $(".devouredBtn");
+
+        devouredBtn.on("click", function () {
+            const id = $(this).data("id");
+            const toEat = $(this).data("toEat");
+
+            const nowDevour = { devoured: toEat };
+
+            $.ajax({
+                url: `/api/burgers/${id}`,
+                method: "PUT",
+                data: nowDevour
+            }).then((response) => {
+                location.reload();
+            })
+        });
+
+        const submitBtn = $("#submitBtn");
+
+        submitBtn.on("click", function (event) {
+            event.preventDefault();
+            const userInput = $("#userInput").val().trim();
+
+            const burger = { burger_name: userInput };
+
+            $.ajax({
+                url: "/api/burgers/",
+                method: "POST",
+                data: burger
+            }).then((response) => {
+                location.reload();
+            });
+        });
+    })
+</script>

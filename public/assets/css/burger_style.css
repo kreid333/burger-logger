@@ -5,3 +5,7 @@
 .toEatDiv {
     margin-bottom: 10px;
 }
+
+body {
+    background-color: rgb(255, 185, 0) !important;
+  }
